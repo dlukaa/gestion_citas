@@ -7,87 +7,150 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<HBox spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.gestioncitas.Controller.ClientesCtrller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestioncitas.Controller.ClientesCtrller">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
     </padding>
-    <children>
-        <VBox prefWidth="340.0" spacing="12.0">
+    <center>
+        <HBox spacing="20.0" BorderPane.alignment="CENTER">
             <children>
-                <Label style="-fx-font-weight: bold; -fx-font-size: 15px;" text="DATOS DEL PACIENTE" />
-                <GridPane hgap="10.0" vgap="10.0">
+                <!-- COLUMNA IZQUIERDA: Formulario -->
+                <VBox prefWidth="420.0" spacing="12.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Nombre:" GridPane.rowIndex="0" />
-                        <TextField fx:id="txtNombre" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                        <Label text="DNI:" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtDni" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Código:" GridPane.rowIndex="2" />
-                        <PasswordField fx:id="txtCodigo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Especialidad:" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="cbEspecialidad" prefWidth="200.0" promptText="Seleccionar..." GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    </children>
-                </GridPane>
+                        <Label alignment="CENTER" maxWidth="Infinity" text="Datos del paciente">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
 
-                <Label style="-fx-font-weight: bold;" text="Tipo de cita:" />
-                <VBox spacing="5.0">
-                    <children>
-                        <RadioButton fx:id="rbPresencial" text="Presencial">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="grupoTipo" />
-                            </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="rbVideollamada" text="Videollamada" toggleGroup="$grupoTipo" />
-                        <RadioButton fx:id="rbTelefonica" text="Telefónica" toggleGroup="$grupoTipo" />
+                        <GridPane hgap="10.0" vgap="12.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="NEVER" minWidth="90.0" prefWidth="90.0" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="30.0" />
+                                <RowConstraints minHeight="30.0" />
+                                <RowConstraints minHeight="30.0" />
+                                <RowConstraints minHeight="30.0" />
+                                <RowConstraints minHeight="30.0" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="Nombre" />
+                                <TextField fx:id="txtNombre" GridPane.columnIndex="1" />
+
+                                <Label text="DNI" GridPane.rowIndex="1" />
+                                <TextField fx:id="txtDni" maxWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                <Label text="Codigo" GridPane.rowIndex="2" />
+                                <TextField fx:id="txtCodigo" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                <Label text="Especialidad" GridPane.rowIndex="3" />
+                                <ComboBox fx:id="cbEspecialidad" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                                <Label text="Fecha cita" GridPane.rowIndex="4" />
+                                <DatePicker fx:id="dpFechaCita" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                            </children>
+                        </GridPane>
+
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label text="Tipo">
+                                    <font>
+                                        <Font name="System Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <HBox spacing="15.0">
+                                    <children>
+                                        <RadioButton fx:id="rbPresencial" mnemonicParsing="false" selected="true" text="Presencial">
+                                            <toggleGroup>
+                                                <ToggleGroup fx:id="tipoGrupo" />
+                                            </toggleGroup>
+                                        </RadioButton>
+                                        <RadioButton fx:id="rbVideollamada" mnemonicParsing="false" text="Videollamada" toggleGroup="$tipoGrupo" />
+                                        <RadioButton fx:id="rbTelefonica" mnemonicParsing="false" text="Telefonica" toggleGroup="$tipoGrupo" />
+                                    </children>
+                                </HBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </VBox>
+
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label text="Servicios">
+                                    <font>
+                                        <Font name="System Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <HBox spacing="20.0">
+                                    <children>
+                                        <CheckBox fx:id="chkSms" mnemonicParsing="false" text="SMS" />
+                                        <CheckBox fx:id="chkEmail" mnemonicParsing="false" text="Email" />
+                                        <CheckBox fx:id="chkInterprete" mnemonicParsing="false" text="Interprete" />
+                                    </children>
+                                </HBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </VBox>
                     </children>
                 </VBox>
 
-                <Label style="-fx-font-weight: bold;" text="Fecha de la cita:" />
-                <DatePicker fx:id="dpFecha" editable="false" prefWidth="200.0" />
+                <!-- SEPARADOR VERTICAL -->
+                <Separator orientation="VERTICAL" />
 
-                <Label style="-fx-font-weight: bold;" text="Servicios adicionales:" />
-                <VBox spacing="5.0">
+                <!-- COLUMNA DERECHA: Listas e Información -->
+                <VBox prefWidth="300.0" spacing="10.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <CheckBox fx:id="chkSms" text="Recordatorio por SMS" />
-                        <CheckBox fx:id="chkEmail" text="Recordatorio por email" />
-                        <CheckBox fx:id="chkInterprete" text="Solicitar intérprete" />
+                        <Label alignment="CENTER" maxWidth="Infinity" text="Citas Registradas">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <ListView fx:id="lvCitas" prefHeight="160.0" VBox.vgrow="ALWAYS" />
+
+                        <Label alignment="CENTER" maxWidth="Infinity" text="Informacion">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="txtAreaInformacion" editable="false" prefHeight="120.0" wrapText="true" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
-
-                <HBox spacing="10.0">
-                    <children>
-                        <Button onAction="#onRegistrarCita" style="-fx-font-weight: bold;" text="REGISTRAR CITA" />
-                        <Button onAction="#onLimpiarFormulario" text="LIMPIAR" />
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </HBox>
             </children>
-        </VBox>
+        </HBox>
+    </center>
 
-        <Separator orientation="VERTICAL" />
-
-        <VBox prefWidth="350.0" spacing="10.0">
+    <!-- PARTE INFERIOR: Botones de Acción -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20.0" />
+            </padding>
             <children>
-                <Label style="-fx-font-weight: bold; -fx-font-size: 15px;" text="CITAS REGISTRADAS" />
-                <ListView fx:id="lvCitas" prefHeight="180.0" />
-
-                <Label style="-fx-font-weight: bold; -fx-font-size: 15px;" text="INFORMACIÓN" />
-                <TextArea fx:id="txtAreaInfo" editable="false" prefHeight="150.0" wrapText="true" />
-
-                <Button onAction="#onEliminarCita" style="-fx-font-weight: bold; -fx-text-fill: #b30000;" text="ELIMINAR CITA" />
+                <Button fx:id="btnNuevaCita" minWidth="110.0" mnemonicParsing="false" onAction="#onNuevaCitaClick" text="Nueva cita" />
+                <Button fx:id="btnBorrarCita" minWidth="110.0" mnemonicParsing="false" onAction="#onBorrarCitaClick" text="Borrar cita" />
+                <Button fx:id="btnLimpiar" minWidth="110.0" mnemonicParsing="false" onAction="#onLimpiarClick" text="Limpiar" />
             </children>
-        </VBox>
-    </children>
-</HBox>
+        </HBox>
+    </bottom>
+</BorderPane>
