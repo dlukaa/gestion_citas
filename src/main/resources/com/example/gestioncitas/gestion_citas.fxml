@@ -7,6 +7,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
@@ -20,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestioncitas.Controller.ClientesCtrller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestioncitas.Controller.CitasCtrller">
     <padding>
         <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
     </padding>
@@ -56,13 +57,13 @@
                                 <TextField fx:id="txtDni" maxWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                                 <Label text="Codigo" GridPane.rowIndex="2" />
-                                <TextField fx:id="txtCodigo" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <PasswordField fx:id="txtCodigo" maxWidth="180.0" promptText="CLINICA2026" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                                 <Label text="Especialidad" GridPane.rowIndex="3" />
                                 <ComboBox fx:id="cbEspecialidad" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                                 <Label text="Fecha cita" GridPane.rowIndex="4" />
-                                <DatePicker fx:id="dpFechaCita" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <DatePicker fx:id="dpFecha" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                         </GridPane>
 
@@ -77,11 +78,11 @@
                                     <children>
                                         <RadioButton fx:id="rbPresencial" mnemonicParsing="false" selected="true" text="Presencial">
                                             <toggleGroup>
-                                                <ToggleGroup fx:id="tipoGrupo" />
+                                                <ToggleGroup fx:id="grupoTipo" />
                                             </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton fx:id="rbVideollamada" mnemonicParsing="false" text="Videollamada" toggleGroup="$tipoGrupo" />
-                                        <RadioButton fx:id="rbTelefonica" mnemonicParsing="false" text="Telefonica" toggleGroup="$tipoGrupo" />
+                                        <RadioButton fx:id="rbVideollamada" mnemonicParsing="false" text="Videollamada" toggleGroup="$grupoTipo" />
+                                        <RadioButton fx:id="rbTelefonica" mnemonicParsing="false" text="Telefonica" toggleGroup="$grupoTipo" />
                                     </children>
                                 </HBox>
                             </children>
@@ -133,7 +134,7 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Label>
-                        <TextArea fx:id="txtAreaInformacion" editable="false" prefHeight="120.0" wrapText="true" VBox.vgrow="ALWAYS" />
+                        <TextArea fx:id="txtAreaInfo" editable="false" prefHeight="120.0" wrapText="true" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
             </children>
@@ -147,8 +148,8 @@
                 <Insets top="20.0" />
             </padding>
             <children>
-                <Button fx:id="btnNuevaCita" minWidth="110.0" mnemonicParsing="false" onAction="#onNuevaCitaClick" text="Nueva cita" />
-                <Button fx:id="btnBorrarCita" minWidth="110.0" mnemonicParsing="false" onAction="#onBorrarCitaClick" text="Borrar cita" />
+                <Button fx:id="btnNuevaCita" minWidth="110.0" mnemonicParsing="false" onAction="#onRegistrarCitaClick" text="Nueva cita" />
+                <Button fx:id="btnBorrarCita" minWidth="110.0" mnemonicParsing="false" onAction="#onEliminarCitaClick" text="Borrar cita" />
                 <Button fx:id="btnLimpiar" minWidth="110.0" mnemonicParsing="false" onAction="#onLimpiarClick" text="Limpiar" />
             </children>
         </HBox>
