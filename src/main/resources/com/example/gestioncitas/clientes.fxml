@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.gestioncitas.Controller.ClientesCtrller">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <VBox prefWidth="340.0" spacing="12.0">
+            <children>
+                <Label style="-fx-font-weight: bold; -fx-font-size: 15px;" text="DATOS DEL PACIENTE" />
+                <GridPane hgap="10.0" vgap="10.0">
+                    <children>
+                        <Label text="Nombre:" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNombre" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="DNI:" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtDni" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Código:" GridPane.rowIndex="2" />
+                        <PasswordField fx:id="txtCodigo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Especialidad:" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="cbEspecialidad" prefWidth="200.0" promptText="Seleccionar..." GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    </children>
+                </GridPane>
+
+                <Label style="-fx-font-weight: bold;" text="Tipo de cita:" />
+                <VBox spacing="5.0">
+                    <children>
+                        <RadioButton fx:id="rbPresencial" text="Presencial">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="grupoTipo" />
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbVideollamada" text="Videollamada" toggleGroup="$grupoTipo" />
+                        <RadioButton fx:id="rbTelefonica" text="Telefónica" toggleGroup="$grupoTipo" />
+                    </children>
+                </VBox>
+
+                <Label style="-fx-font-weight: bold;" text="Fecha de la cita:" />
+                <DatePicker fx:id="dpFecha" editable="false" prefWidth="200.0" />
+
+                <Label style="-fx-font-weight: bold;" text="Servicios adicionales:" />
+                <VBox spacing="5.0">
+                    <children>
+                        <CheckBox fx:id="chkSms" text="Recordatorio por SMS" />
+                        <CheckBox fx:id="chkEmail" text="Recordatorio por email" />
+                        <CheckBox fx:id="chkInterprete" text="Solicitar intérprete" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="10.0">
+                    <children>
+                        <Button onAction="#onRegistrarCita" style="-fx-font-weight: bold;" text="REGISTRAR CITA" />
+                        <Button onAction="#onLimpiarFormulario" text="LIMPIAR" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+
+        <Separator orientation="VERTICAL" />
+
+        <VBox prefWidth="350.0" spacing="10.0">
+            <children>
+                <Label style="-fx-font-weight: bold; -fx-font-size: 15px;" text="CITAS REGISTRADAS" />
+                <ListView fx:id="lvCitas" prefHeight="180.0" />
+
+                <Label style="-fx-font-weight: bold; -fx-font-size: 15px;" text="INFORMACIÓN" />
+                <TextArea fx:id="txtAreaInfo" editable="false" prefHeight="150.0" wrapText="true" />
+
+                <Button onAction="#onEliminarCita" style="-fx-font-weight: bold; -fx-text-fill: #b30000;" text="ELIMINAR CITA" />
+            </children>
+        </VBox>
+    </children>
+</HBox>
