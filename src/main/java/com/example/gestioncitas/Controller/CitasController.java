@@ -1,6 +1,8 @@
 package com.example.gestioncitas.Controller;
 
 import com.example.gestioncitas.Model.Cita;
+import com.example.gestioncitas.Model.Paciente;
+import com.example.gestioncitas.util.AlertUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,21 +13,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitasCtrller {
+public class CitasController {
 
-    private static final String CODIGO_EMPLEADO_VALIDO = "CLINICA2026";
+    private static final String CODIGO_VALIDO = "CLINICA2026";
 
     @FXML private TextField txtNombre;
     @FXML private TextField txtDni;
     @FXML private PasswordField txtCodigo;
     @FXML private ComboBox<String> cbEspecialidad;
     @FXML private DatePicker dpFecha;
-
     @FXML private ToggleGroup grupoTipo;
-    @FXML private RadioButton rbPresencial;
-    @FXML private RadioButton rbVideollamada;
-    @FXML private RadioButton rbTelefonica;
-
     @FXML private CheckBox chkSms;
     @FXML private CheckBox chkEmail;
     @FXML private CheckBox chkInterprete;
@@ -37,7 +34,7 @@ public class CitasCtrller {
 
     @FXML
     public void initialize() {
-        // Cargar especialidades del PDF
+        // Cargar especialidades
         cbEspecialidad.getItems().addAll(
                 "Medicina general",
                 "Pediatría",
@@ -46,13 +43,13 @@ public class CitasCtrller {
                 "Cardiología"
         );
 
-        // Enlazar la ObservableList con el ListView
+        // Enlazar ListView con ObservableList
         lvCitas.setItems(listaCitas);
 
-        // Listener: cuando se seleccione una cita en la lista, mostrar su detalle
-        lvCitas.getSelectionModel().selectedItemProperty().addListener((obs, anterior, seleccionada) -> {
-            if (seleccionada != null) {
-                txtAreaInfo.setText(seleccionada.getResumenCita());
+        // Listener para mostrar la cita seleccionada en el TextArea
+        lvCitas.getSelectionModel().selectedItemProperty().addListener((obs, anterior, seleccionado) -> {
+            if (seleccionado != null) {
+                txtAreaInfo.setText(seleccionado.getResumenDetalle());
             } else {
                 txtAreaInfo.clear();
             }
@@ -61,22 +58,22 @@ public class CitasCtrller {
 
     @FXML
     void onRegistrarCitaClick(ActionEvent event) {
-        String nombre = txtNombre.getText().trim();
-        String dni = txtDni.getText().trim();
-        String codigo = txtCodigo.getText().trim();
+        String nombre = txtNombre.getText() != null ? txtNombre.getText().trim() : "";
+        String dni = txtDni.getText() != null ? txtDni.getText().trim() : "";
+        String codigo = txtCodigo.getText() != null ? txtCodigo.getText().trim() : "";
         String especialidad = cbEspecialidad.getValue();
         LocalDate fecha = dpFecha.getValue();
         RadioButton seleccionado = (RadioButton) grupoTipo.getSelectedToggle();
 
         // 1. Validaciones obligatorias
-        if (nombre.isEmpty() || dni.isEmpty() || codigo.isEmpty() || especialidad == null || fecha == null || seleccionado == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos obligatorios", "Por favor, completa todos los campos requeridos para registrar la cita.");
+        if (nombre.isEmpty() || dni.isEmpty() || especialidad == null || fecha == null || seleccionado == null) {
+            AlertUtils.mostrarError("Por favor, rellene todos los campos obligatorios para registrar la cita.");
             return;
         }
 
-        // 2. Validación de código de empleado
-        if (!CODIGO_EMPLEADO_VALIDO.equals(codigo)) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Código incorrecto", "El código de empleado no es válido. No se puede registrar la cita.");
+        // 2. Validar código de empleado
+        if (!CODIGO_VALIDO.equals(codigo)) {
+            AlertUtils.mostrarError("El código de empleado no es válido. No se puede registrar la cita.");
             return;
         }
 
@@ -84,12 +81,15 @@ public class CitasCtrller {
         List<String> servicios = new ArrayList<>();
         if (chkSms.isSelected()) servicios.add("SMS");
         if (chkEmail.isSelected()) servicios.add("Email");
-        if (chkInterprete.isSelected()) servicios.add("Intérprete");
+        if (chkInterprete.isSelected()) servicios.add("Interprete");
 
-        // 4. Crear la cita y añadirla a la lista
-        Cita nuevaCita = new Cita(nombre, dni, especialidad, seleccionado.getText(), fecha, servicios);
+        // 4. Crear paciente y cita
+        Paciente paciente = new Paciente(nombre, dni);
+        Cita nuevaCita = new Cita(paciente, especialidad, seleccionado.getText(), fecha, servicios);
+
         listaCitas.add(nuevaCita);
 
+        // Limpiar controles tras registrar
         onLimpiarClick(null);
     }
 
@@ -97,10 +97,11 @@ public class CitasCtrller {
     void onEliminarCitaClick(ActionEvent event) {
         Cita seleccionada = lvCitas.getSelectionModel().getSelectedItem();
         if (seleccionada == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Sin selección", "Debes seleccionar una cita de la lista para poder eliminarla.");
-        } else {
-            listaCitas.remove(seleccionada);
+            AlertUtils.mostrarAviso("No has seleccionado ninguna cita para eliminar.");
+            return;
         }
+        listaCitas.remove(seleccionada);
+        txtAreaInfo.clear();
     }
 
     @FXML
@@ -108,19 +109,13 @@ public class CitasCtrller {
         txtNombre.clear();
         txtDni.clear();
         txtCodigo.clear();
-        cbEspecialidad.getSelectionModel().clearSelection();
+        cbEspecialidad.setValue(null);
         dpFecha.setValue(null);
-        rbPresencial.setSelected(true);
+        if (grupoTipo.getSelectedToggle() != null) {
+            grupoTipo.getSelectedToggle().setSelected(false);
+        }
         chkSms.setSelected(false);
         chkEmail.setSelected(false);
         chkInterprete.setSelected(false);
-    }
-
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert alerta = new Alert(tipo);
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.showAndWait();
     }
 }

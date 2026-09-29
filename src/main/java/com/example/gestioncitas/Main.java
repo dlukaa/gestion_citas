@@ -1,6 +1,5 @@
 package com.example.gestioncitas;
 
-import com.example.gestioncitas.util.R;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,9 +10,9 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(R.getUI("gestion_citas.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 760, 530);
-        stage.setTitle("Gestión de Citas");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/gestion_citas.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 520);
+        stage.setTitle("Gestión de Citas - Clínica");
         stage.setScene(scene);
         stage.show();
     }
