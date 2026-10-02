@@ -28,7 +28,7 @@
     <center>
         <HBox spacing="20.0" BorderPane.alignment="CENTER">
             <children>
-                <!-- COLUMNA IZQUIERDA: Formulario -->
+                <!-- Columna de la izquierda: Formulario -->
                 <VBox prefWidth="420.0" spacing="12.0" HBox.hgrow="ALWAYS">
                     <children>
                         <Label alignment="CENTER" maxWidth="Infinity" text="Datos del paciente">
@@ -113,10 +113,10 @@
                     </children>
                 </VBox>
 
-                <!-- SEPARADOR VERTICAL -->
+                <!-- Linea que se usa de separador vertical -->
                 <Separator orientation="VERTICAL" />
 
-                <!-- COLUMNA DERECHA: Listas e Información -->
+                <!-- Columna de la derecha: Listas e Información -->
                 <VBox prefWidth="300.0" spacing="10.0" HBox.hgrow="ALWAYS">
                     <children>
                         <Label alignment="CENTER" maxWidth="Infinity" text="Citas Registradas">
@@ -124,7 +124,7 @@
                                 <Font size="18.0" />
                             </font>
                         </Label>
-                        <ListView fx:id="lvCitas" prefHeight="160.0" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="listViewCitas" prefHeight="160.0" VBox.vgrow="ALWAYS" />
 
                         <Label alignment="CENTER" maxWidth="Infinity" text="Informacion">
                             <font>
@@ -141,7 +141,7 @@
         </HBox>
     </center>
 
-    <!-- PARTE INFERIOR: Botones de Acción -->
+    <!-- Parte inferior del formulario: Botones de Acción -->
     <bottom>
         <HBox alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
             <padding>

@@ -55,8 +55,8 @@ public class Cita {
                 + "Tipo: " + tipo + "\n"
                 + "Fecha: " + (fecha != null ? fecha.format(formato) : "") + "\n"
                 + "Servicios adicionales:\n"
-                + (servicios.contains("SMS") ? "✓ SMS\n" : "✗ SMS\n")
-                + (servicios.contains("Email") ? "✓ Email\n" : "✗ Email\n")
-                + (servicios.contains("Interprete") ? "✓ Intérprete" : "✗ Intérprete");
+                + (servicios.contains("SMS") ? "SI SMS\n" : "NO SMS\n")
+                + (servicios.contains("Email") ? "SI Email\n" : "NO Email\n")
+                + (servicios.contains("Interprete") ? "SI Intérprete" : " NO Intérprete");
     }
 }
